@@ -1,0 +1,23 @@
+{
+    "name": "inspira/blaze",
+    "description": "PHP error page component.",
+    "type": "library",
+    "require": {
+        "psr/http-message": "2.0.x-dev",
+        "inspira/contracts": "dev-master",
+        "demyanovs/php-highlight": "dev-master"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Inspira\\Blaze\\": "."
+        }
+    },
+    "authors": [
+        {
+            "name": "Ronald Lambino",
+            "email": "50892397+nadlambino@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
