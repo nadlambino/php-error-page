@@ -4,15 +4,9 @@ declare(strict_types=1);
 
 namespace Inspira\ErrorPage;
 
-use Psr\Http\Message\ResponseInterface;
-
 class ErrorPage
 {
-	private bool $isEnabled = true;
-
-	private bool $isConsole = false;
-
-	public function __construct(protected ResponseInterface $response) { }
+	public function __construct(private bool $isEnabled = true, private bool $isConsole = false, private int $maxSnapShotLine = 5) { }
 	
 	public function isEnabled(bool $isEnabled): self
 	{
@@ -30,7 +24,7 @@ class ErrorPage
 
 	public function register(): void
 	{
-		set_exception_handler(new ExceptionHandler($this->response, $this->isEnabled, $this->isConsole));
+		set_exception_handler(new ExceptionHandler($this->isEnabled, $this->isConsole, $this->maxSnapShotLine));
 		set_error_handler(new ErrorHandler(), E_ALL);
 	}
 }

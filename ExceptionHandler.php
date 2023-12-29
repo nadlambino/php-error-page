@@ -14,10 +14,9 @@ use Psr\Http\Message\ResponseInterface;
 class ExceptionHandler
 {
 	public function __construct(
-		protected ResponseInterface $response,
 		protected bool $isEnabled,
 		protected bool $isConsole,
-		protected int $maxSnapshotLine = 5
+		protected int $maxSnapShotLine = 5
 	) { }
 
 	/**
@@ -28,7 +27,9 @@ class ExceptionHandler
 	{
 		ob_clean();
 		http_response_code(500);
-		$this->response->getBody()->write($this->getErrorMessage($exception));
+		$stream = fopen('php://output', 'w');
+		fwrite($stream, $this->getErrorMessage($exception));
+		fclose($stream);
 	}
 
 	/**
@@ -68,8 +69,8 @@ class ExceptionHandler
 	{
 		if (file_exists($file)) {
 			$lines = file($file);
-			$start = max(1, $line - $this->maxSnapshotLine);
-			$end = min(count($lines), $line + $this->maxSnapshotLine);
+			$start = max(1, $line - $this->maxSnapShotLine);
+			$end = min(count($lines), $line + $this->maxSnapShotLine);
 			$errorLines = array_slice($lines, $start - 1, $end - $start + 1, true);
 			$codeblock = null;
 
@@ -110,7 +111,7 @@ class ExceptionHandler
 			...$exception->getTrace()
 		]);
 
-		$file = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'index';
+		$file = __DIR__ . DIRECTORY_SEPARATOR . 'index.php';
 
 		return self::render($file, [
 			'message'       => $exception->getMessage(),

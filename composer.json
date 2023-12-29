@@ -3,7 +3,6 @@
     "description": "PHP error page component.",
     "type": "library",
     "require": {
-        "psr/http-message": "2.0.x-dev",
         "inspira/contracts": "dev-master",
         "demyanovs/php-highlight": "dev-master"
     },
