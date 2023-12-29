@@ -1,5 +1,5 @@
 {
-    "name": "inspira/blaze",
+    "name": "inspira/error-page",
     "description": "PHP error page component.",
     "type": "library",
     "require": {
@@ -10,7 +10,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Inspira\\Blaze\\": "."
+            "Inspira\\ErrorPage\\": "."
         }
     },
     "authors": [

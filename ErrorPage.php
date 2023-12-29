@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Inspira\Logger;
+namespace Inspira\ErrorPage;
 
 use Psr\Http\Message\ResponseInterface;
 
-class Blaze
+class ErrorPage
 {
 	private bool $isEnabled = true;
 

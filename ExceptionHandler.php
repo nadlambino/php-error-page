@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Inspira\Logger;
+namespace Inspira\ErrorPage;
 
 use Throwable;
 use Exception;
