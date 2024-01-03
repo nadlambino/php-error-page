@@ -111,9 +111,7 @@ class ExceptionHandler
 			...$exception->getTrace()
 		]);
 
-		$file = __DIR__ . DIRECTORY_SEPARATOR . 'index.php';
-
-		return self::render($file, [
+		return self::render(__DIR__ . DIRECTORY_SEPARATOR . 'index.php', [
 			'message'       => $exception->getMessage(),
 			'code'          => $exception->getCode(),
 			'file'          => $file,
@@ -125,11 +123,11 @@ class ExceptionHandler
 		]);
 	}
 
-	private static function render(string $file, array $data = []): string
+	private static function render(string $view, array $data = []): string
 	{
 		extract($data);
 		ob_start();
-		require $file;
+		require $view;
 		return ob_get_clean();
 	}
 }

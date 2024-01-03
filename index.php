@@ -126,36 +126,36 @@
                     <?php /** @var bool $isException */ ?>
                     <?php /** @var string $class */ ?>
                     <label class="text-muted"><?= $isException ? 'Exception' : 'Error' ?>: <?= $class ?></label>
-	                <?php /** @var string $message */ ?>
+                    <?php /** @var string $message */ ?>
                     <h1><?= $message ?></h1>
-	                <?php
-	                /**
-	                 * @var string $file
-	                 * @var string $line
-	                 */ ?>
+                    <?php
+                    /**
+                     * @var string $file
+                     * @var string $line
+                     */ ?>
                     <label class="text-muted">Found at <?= $file ?> on line <?= $line ?></label>
                 </div>
-	            <?php if (!empty($solutions)): ?>
-                <div class="suggestions-container">
-                    <label class="text-muted">Suggestions</label>
-                    <ul>
-	                    <?php foreach ($solutions as $solution): ?>
-                            <li><?= $solution ?></li>
-	                    <?php endforeach; ?>
-                    </ul>
-                </div>
-	            <?php endif ?>
+                <?php if (!empty($solutions)): ?>
+                    <div class="suggestions-container">
+                        <label class="text-muted">Suggestions</label>
+                        <ul>
+                            <?php foreach ($solutions as $solution): ?>
+                                <li><?= $solution ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif ?>
             </div>
         </div>
         <div class="snapshots-wrapper">
             <div class="container">
                 <h5 class="stack-trace-label">Stack Trace</h5>
-	            <?php /** @var array $snapshots */ ?>
-		        <?php foreach ($snapshots as $snapshot): ?>
+                <?php /** @var array $snapshots */ ?>
+                <?php foreach ($snapshots as $snapshot): ?>
                     <div class="snapshot-container">
                         <?= $snapshot ?>
                     </div>
-		        <?php endforeach; ?>
+                <?php endforeach; ?>
             </div>
         </div>
     </main>
