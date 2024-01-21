@@ -1,0 +1,113 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "a842458a43209c58c8d0d27916f4f03a",
+    "packages": [
+        {
+            "name": "demyanovs/php-highlight",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/demyanovs/php-highlight.git",
+                "reference": "98b5f20acbbd5ff914d2c6ad833a339a7089ac1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/demyanovs/php-highlight/zipball/98b5f20acbbd5ff914d2c6ad833a339a7089ac1e",
+                "reference": "98b5f20acbbd5ff914d2c6ad833a339a7089ac1e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^12.0",
+                "phpunit/phpunit": "^10.2",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Demyanovs\\PHPHighlight\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Demyanov Vyacheslav",
+                    "email": "demyanovs@gmail.com"
+                }
+            ],
+            "description": "A PHP library for highlighting code syntax.",
+            "keywords": [
+                "codehighlighter",
+                "codehighlighting",
+                "php-highlight",
+                "php_highlight",
+                "syntax-highlighting"
+            ],
+            "support": {
+                "issues": "https://github.com/demyanovs/php-highlight/issues",
+                "source": "https://github.com/demyanovs/php-highlight/tree/2.1.0"
+            },
+            "time": "2023-06-13T20:53:06+00:00"
+        },
+        {
+            "name": "inspira/contracts",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nadlambino/php-contracts.git",
+                "reference": "811ba8aac71b173e12c1c1b7fcde4370f0fd11fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nadlambino/php-contracts/zipball/811ba8aac71b173e12c1c1b7fcde4370f0fd11fa",
+                "reference": "811ba8aac71b173e12c1c1b7fcde4370f0fd11fa",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Inspira\\Contracts\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ronald Lambino",
+                    "email": "50892397+nadlambino@users.noreply.github.com"
+                }
+            ],
+            "description": "Collection of PHP interfaces.",
+            "support": {
+                "issues": "https://github.com/nadlambino/php-contracts/issues",
+                "source": "https://github.com/nadlambino/php-contracts/tree/master"
+            },
+            "time": "2023-12-28T06:58:48+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "inspira/contracts": 20,
+        "demyanovs/php-highlight": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

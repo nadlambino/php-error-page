@@ -12,6 +12,7 @@
             --primary-light: #fff;
             --secondary-light: #e8e8e8;
             --muted: #94a4b7;
+            --accent: #06b539;
         }
 
         body, div, h1, h2, h3, h4, h5, p, label, small {
@@ -22,7 +23,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            font-size: 16px;
+            font-size: 14px;
             color: var(--secondary-dark);
             background-color: var(--secondary-light);
         }
@@ -59,7 +60,7 @@
 
         .suggestions-container {
             width: 35%;
-            color: #3dc268;
+            color: var(--accent);
         }
 
         .suggestions-container ul {
@@ -116,6 +117,14 @@
         .code-highlighter {
             background-color: var(--primary-dark) !important;
         }
+
+        .badge {
+            background-color: var(--accent);
+            color: var(--primary-light) !important;
+            font-size: 11px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -123,9 +132,8 @@
         <div class="main-error">
             <div class="container">
                 <div class="message-container">
-                    <?php /** @var bool $isException */ ?>
                     <?php /** @var string $class */ ?>
-                    <label class="text-muted"><?= $isException ? 'Exception' : 'Error' ?>: <?= $class ?></label>
+                    <label class="badge"><?= $class ?></label>
                     <?php /** @var string $message */ ?>
                     <h1><?= $message ?></h1>
                     <?php

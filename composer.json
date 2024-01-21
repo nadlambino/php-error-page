@@ -9,7 +9,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Inspira\\ErrorPage\\": "."
+            "Inspira\\ErrorPage\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Inspira\\ErrorPage\\app\\": "./app"
         }
     },
     "authors": [
