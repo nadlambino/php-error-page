@@ -11,7 +11,7 @@
             --secondary-dark: #404243;
             --primary-light: #fff;
             --secondary-light: #e8e8e8;
-            --muted: #94a4b7;
+            --muted: #7a828d;
             --accent: #06b539;
         }
 
@@ -23,86 +23,92 @@
 
         body {
             font-family: Arial, sans-serif;
-            font-size: 14px;
-            color: var(--secondary-dark);
-            background-color: var(--secondary-light);
-        }
-
-        main {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .text-muted {
-            color: var(--muted);
+            font-size: 16px;
+            background-color: var(--primary-light);
         }
 
         .container {
-            width: 100%;
+            width: auto;
             max-width: 1280px;
             padding: 1rem;
+            margin: auto;
         }
 
-        .main-error {
+        .badge {
+            background-color: var(--accent);
+            color: var(--primary-light) !important;
+            font-size: 11px;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .header {
             background-color: var(--primary-dark);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem 0;
         }
 
-        .main-error .container {
+        .minor-details {
             display: flex;
-            gap: 2rem;
             justify-content: space-between;
-            align-items: start;
+        }
+
+        .major-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media screen and (min-width: 1024px) {
+            .major-details {
+                flex-direction: row;
+            }
+        }
+
+        .major-details-item {
+            width: 100%;
         }
 
         .suggestions-container {
-            width: 35%;
-            color: var(--accent);
+            width: 100%;
         }
 
-        .suggestions-container ul {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-            padding: 0 0 0 20px;
-            font-style: italic;
+        @media screen and (min-width: 1024px) {
+            .suggestions-container {
+                width: 50%;
+            }
         }
 
-        .main-error label {
+        .suggestions-container label {
             color: var(--muted);
         }
 
-        .main-error h1 {
+        .suggestion-list {
+            color: #00ff51;
+            font-style: italic;
+            padding: 0 0 0 20px;
+            list-style-position: outside;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .message {
             color: var(--primary-light);
-            margin: 1rem 0;
+            font-size: 32px;
+            margin-bottom: 0.5rem;
         }
 
-        .snapshots-wrapper {
+        .location {
+            color: var(--muted);
+        }
+
+        .frames-container {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 0;
+            gap: 1rem;
         }
 
-        .snapshots-wrapper .container {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .snapshot-container {
-            width: 100%;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-        }
-
-        .snapshots-wrapper .stack-trace-label {
-            margin-bottom: -1rem;
-            text-transform: uppercase;
-            font-weight: bolder
+        .frames-label {
+            color: var(--muted);
         }
 
         .code-block-wrapper {
@@ -117,55 +123,47 @@
         .code-highlighter {
             background-color: var(--primary-dark) !important;
         }
-
-        .badge {
-            background-color: var(--accent);
-            color: var(--primary-light) !important;
-            font-size: 11px;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
     </style>
 </head>
 <body>
-    <main>
-        <div class="main-error">
-            <div class="container">
-                <div class="message-container">
-                    <?php /** @var string $class */ ?>
-                    <label class="badge"><?= $class ?></label>
-                    <?php /** @var string $message */ ?>
-                    <h1><?= $message ?></h1>
-                    <?php
-                    /**
-                     * @var string $file
-                     * @var string $line
-                     */ ?>
-                    <label class="text-muted">Found at <?= $file ?> on line <?= $line ?></label>
+    <div class="header">
+        <div class="container minor-details">
+            <?php /** @var string $class */ ?>
+            <label class="badge"><?= $class ?></label>
+            <?php /** @var string $phpVersion */ ?>
+            <label class="badge">PHP <?= $phpVersion ?></label>
+        </div>
+        <div class="container major-details">
+            <div class="major-details-item">
+                <?php /** @var string $message */ ?>
+                <h1 class="message"><?= $message ?></h1>
+                <?php
+                /**
+                 * @var string $file
+                 * @var string $line
+                 */ ?>
+                <label class="text-muted location"><?= $file ?> on line <?= $line ?></label>
+            </div>
+            <?php if (!empty($solutions)): ?>
+                <div class="major-details-item suggestions-container">
+                    <label>Suggestions</label>
+                    <ul class="suggestion-list">
+                        <?php foreach ($solutions as $solution): ?>
+                            <li><?= $solution ?></li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
-                <?php if (!empty($solutions)): ?>
-                    <div class="suggestions-container">
-                        <label class="text-muted">Suggestions</label>
-                        <ul>
-                            <?php foreach ($solutions as $solution): ?>
-                                <li><?= $solution ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                <?php endif ?>
-            </div>
+            <?php endif ?>
         </div>
-        <div class="snapshots-wrapper">
-            <div class="container">
-                <h5 class="stack-trace-label">Stack Trace</h5>
-                <?php /** @var array $snapshots */ ?>
-                <?php foreach ($snapshots as $snapshot): ?>
-                    <div class="snapshot-container">
-                        <?= $snapshot ?>
-                    </div>
-                <?php endforeach; ?>
+    </div>
+    <div class="frames-container container">
+        <h5 class="frames-label">Frames</h5>
+        <?php /** @var array $snapshots */ ?>
+        <?php foreach ($snapshots as $snapshot): ?>
+            <div class="snapshot-container">
+                <?= $snapshot ?>
             </div>
-        </div>
-    </main>
+        <?php endforeach; ?>
+    </div>
 </body>
 </html>

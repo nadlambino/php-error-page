@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a842458a43209c58c8d0d27916f4f03a",
+    "content-hash": "bc36276ba9abb7936c739fccea843197",
     "packages": [
         {
             "name": "demyanovs/php-highlight",
@@ -98,12 +98,58 @@
             "time": "2023-12-28T06:58:48+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "inspira/utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nadlambino/php-utils.git",
+                "reference": "64efb154a9f20fa9b07b1fa8a186e1433d1e9b6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nadlambino/php-utils/zipball/64efb154a9f20fa9b07b1fa8a186e1433d1e9b6e",
+                "reference": "64efb154a9f20fa9b07b1fa8a186e1433d1e9b6e",
+                "shasum": ""
+            },
+            "require": {
+                "inspira/contracts": "dev-master"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "functions.php"
+                ],
+                "psr-4": {
+                    "Inspira\\Utils\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ronald Lambino",
+                    "email": "50892397+nadlambino@users.noreply.github.com"
+                }
+            ],
+            "description": "Collection of PHP utility functions.",
+            "support": {
+                "issues": "https://github.com/nadlambino/php-utils/issues",
+                "source": "https://github.com/nadlambino/php-utils/tree/master"
+            },
+            "time": "2023-12-28T09:00:30+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
         "inspira/contracts": 20,
-        "demyanovs/php-highlight": 20
+        "demyanovs/php-highlight": 20,
+        "inspira/utils": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -118,7 +118,8 @@ class ExceptionHandler
 			'line'          => $line - 1,
 			'snapshots'     => $snapshots,
 			'solutions'     => $exception instanceof ExceptionWithSuggestions ? $exception->getSuggestions() : [],
-			'class'         => get_class($exception)
+			'class'         => get_class($exception),
+			'phpVersion'    => phpversion()
 		]);
 	}
 

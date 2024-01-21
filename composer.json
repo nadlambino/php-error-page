@@ -6,6 +6,9 @@
         "inspira/contracts": "dev-master",
         "demyanovs/php-highlight": "dev-master"
     },
+    "require-dev": {
+        "inspira/utils": "dev-master"
+    },
     "license": "MIT",
     "autoload": {
         "psr-4": {
