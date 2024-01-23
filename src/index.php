@@ -158,10 +158,10 @@
     </div>
     <div class="frames-container container">
         <h5 class="frames-label">Frames</h5>
-        <?php /** @var array $snapshots */ ?>
-        <?php foreach ($snapshots as $snapshot): ?>
-            <div class="snapshot-container">
-                <?= $snapshot ?>
+        <?php /** @var array $frames */ ?>
+        <?php foreach ($frames as $frame): ?>
+            <div class="frame-container">
+                <?= $frame ?>
             </div>
         <?php endforeach; ?>
     </div>

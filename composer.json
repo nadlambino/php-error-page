@@ -7,7 +7,8 @@
         "demyanovs/php-highlight": "dev-master"
     },
     "require-dev": {
-        "inspira/utils": "dev-master"
+        "inspira/utils": "dev-master",
+        "symfony/var-dumper": "7.1.x-dev"
     },
     "license": "MIT",
     "autoload": {

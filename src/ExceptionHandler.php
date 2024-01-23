@@ -5,18 +5,16 @@ declare(strict_types=1);
 namespace Inspira\ErrorPage;
 
 use Throwable;
-use Exception;
 use Demyanovs\PHPHighlight\Highlighter;
 use Demyanovs\PHPHighlight\Themes\ObsidianTheme;
 use Inspira\Contracts\ExceptionWithSuggestions;
-use Psr\Http\Message\ResponseInterface;
 
 class ExceptionHandler
 {
 	public function __construct(
 		protected bool $isEnabled,
 		protected bool $isConsole,
-		protected int $maxSnapShotLine = 5
+		protected int $maxFrameLines = 5
 	) { }
 
 	/**
@@ -36,28 +34,28 @@ class ExceptionHandler
 	 * @param array $stacks
 	 * @return array
 	 */
-	private function getSortedSnapshots(array $stacks): array
+	private function getSortedFrames(array $stacks): array
 	{
-		$snapshots = [];
+		$frames = [];
 		foreach ($stacks as $stack) {
 			if (!isset($stack['file']) || !isset($stack['line'])) {
 				continue;
 			}
 
-			$snapshots[$stack['file']] = $this->createCodeSnapshot($stack['file'], $stack['line']);
+			$frames[$stack['file']] = $this->createCodeFrame($stack['file'], $stack['line']);
 		}
 
-		$appSnapshots = [];
-		$otherSnapshots = [];
-		foreach ($snapshots as $filename => $contents) {
+		$appFrames = [];
+		$otherFrames = [];
+		foreach ($frames as $filename => $contents) {
 			if (!str_contains($filename, 'public/index') && !str_contains($filename, 'vendor')) {
-				$appSnapshots[] = $contents;
+				$appFrames[] = $contents;
 			} else {
-				$otherSnapshots[] = $contents;
+				$otherFrames[] = $contents;
 			}
 		}
 
-		return array_values([...$appSnapshots, ...$otherSnapshots]);
+		return array_values([...$appFrames, ...$otherFrames]);
 	}
 
 	/**
@@ -65,28 +63,29 @@ class ExceptionHandler
 	 * @param int $line
 	 * @return string|null
 	 */
-	private function createCodeSnapshot(string $file, int $line): ?string
+	private function createCodeFrame(string $file, int $line): ?string
 	{
 		if (file_exists($file)) {
 			$lines = file($file);
-			$start = max(1, $line - $this->maxSnapShotLine);
-			$end = min(count($lines), $line + $this->maxSnapShotLine);
+			$start = max(1, $line - $this->maxFrameLines);
+			$end = min(count($lines), $line + $this->maxFrameLines);
 			$errorLines = array_slice($lines, $start - 1, $end - $start + 1, true);
 			$codeblock = null;
 
 			foreach ($errorLines as $num => $code) {
-				$codeblock .= "$num   $code";
+				$lineNumber = $num + 1;
+				$codeblock .= "$lineNumber   $code";
 			}
 
-			$line -= 1;
-			$snapshot = "<pre data-file='$file on line $line' data-lang='php'>";
-			$snapshot .= $codeblock;
-			$snapshot .= "</pre>";
+			$frame = "<pre data-file='$file on line $line' data-lang='php'>";
+			$frame .= $codeblock;
+			$frame .= "</pre>";
 
-			$highlighter = new Highlighter($snapshot, ObsidianTheme::TITLE);
+			$highlighter = new Highlighter($frame, ObsidianTheme::TITLE);
 			$highlighter->showLineNumbers(false);
+			$parsed = $highlighter->parse();
 
-			return $highlighter->parse();
+			return str_replace("\r\r", "\r", $parsed);
 		}
 
 		return null;
@@ -106,7 +105,7 @@ class ExceptionHandler
 
 		$file = $exception->getFile();
 		$line = $exception->getLine();
-		$snapshots = $this->getSortedSnapshots([
+		$frames = $this->getSortedFrames([
 			['file' => $file, 'line' => $line],
 			...$exception->getTrace()
 		]);
@@ -115,8 +114,8 @@ class ExceptionHandler
 			'message'       => $exception->getMessage(),
 			'code'          => $exception->getCode(),
 			'file'          => $file,
-			'line'          => $line - 1,
-			'snapshots'     => $snapshots,
+			'line'          => $line,
+			'frames'        => $frames,
 			'solutions'     => $exception instanceof ExceptionWithSuggestions ? $exception->getSuggestions() : [],
 			'class'         => get_class($exception),
 			'phpVersion'    => phpversion()
