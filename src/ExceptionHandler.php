@@ -83,12 +83,33 @@ class ExceptionHandler
 
 			$highlighter = new Highlighter($frame, ObsidianTheme::TITLE);
 			$highlighter->showLineNumbers(false);
-			$parsed = $highlighter->parse();
+			$frame = str_replace("\r\r", "\r", $highlighter->parse());
 
-			return str_replace("\r\r", "\r", $parsed);
+			return $this->wrapErrorLine($frame, $line);
 		}
 
 		return null;
+	}
+
+	/**
+	 * Wrap the error line with div element to better style and highlight the line where the error is located.
+	 *
+	 * @param string $frame The codeblock frame.
+	 * @param int $line The error line.
+	 * @return string
+	 */
+	private function wrapErrorLine(string $frame, int $line): string
+	{
+		$codePerLine = explode("\n", $frame);
+		$code = array_map(function ($code) use ($line) {
+			if (str_contains($code, '<span style="color: #e0e2e4;">' . $line)) {
+				$code = "<div class='error-line'>$code</div>";
+			}
+
+			return $code;
+		}, $codePerLine);
+
+		return implode("\n", $code);
 	}
 
 	private function getErrorMessage(Throwable $exception): string

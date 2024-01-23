@@ -123,6 +123,12 @@
         .code-highlighter {
             background-color: var(--primary-dark) !important;
         }
+
+        .error-line {
+            background-color: #ff000090;
+            display: inline-block;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
