@@ -102,8 +102,9 @@ class ExceptionHandler
 		$codePerLine = explode("\n", $frame);
 		$red = CustomTheme::RED;
 		$code = array_map(function ($code) use ($line, $red) {
-			$pattern = '/<span (.*?)>' . $line . '/';
-			if (preg_match($pattern, $code)) {
+			$lineNumberOnFirstLinePattern = '/<span (.*?)>' . $line . '/';
+			$lineNumberOnNewLinePattern = '/' . $line . '(.*?)&nbsp;/';
+			if (preg_match($lineNumberOnFirstLinePattern, $code) || preg_match($lineNumberOnNewLinePattern, $code)) {
 				$code = "<div style='display: inline-block; width: 100%; background-color: $red'>$code</div>";
 			}
 
