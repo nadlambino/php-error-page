@@ -6,7 +6,7 @@ namespace Inspira\ErrorPage;
 
 class ErrorPage
 {
-	public function __construct(private bool $isEnabled = true, private bool $isConsole = false, private int $maxSnapShotLine = 5) { }
+	public function __construct(private bool $isEnabled = true, private bool $isConsole = false, private int $maxSnapShotLine = 10) { }
 	
 	public function isEnabled(bool $isEnabled): self
 	{

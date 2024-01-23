@@ -6,7 +6,6 @@ namespace Inspira\ErrorPage;
 
 use Throwable;
 use Demyanovs\PHPHighlight\Highlighter;
-use Demyanovs\PHPHighlight\Themes\ObsidianTheme;
 use Inspira\Contracts\ExceptionWithSuggestions;
 
 class ExceptionHandler
@@ -81,29 +80,31 @@ class ExceptionHandler
 			$frame .= $codeblock;
 			$frame .= "</pre>";
 
-			$highlighter = new Highlighter($frame, ObsidianTheme::TITLE);
+			$highlighter = new Highlighter($frame, CustomTheme::TITLE, CustomTheme::load());
 			$highlighter->showLineNumbers(false);
 			$frame = str_replace("\r\r", "\r", $highlighter->parse());
 
-			return $this->wrapErrorLine($frame, $line);
+			return $this->highlightErrorLine($frame, $line);
 		}
 
 		return null;
 	}
 
 	/**
-	 * Wrap the error line with div element to better style and highlight the line where the error is located.
+	 * Highlight the error line where the error occurred.
 	 *
 	 * @param string $frame The codeblock frame.
 	 * @param int $line The error line.
 	 * @return string
 	 */
-	private function wrapErrorLine(string $frame, int $line): string
+	private function highlightErrorLine(string $frame, int $line): string
 	{
 		$codePerLine = explode("\n", $frame);
-		$code = array_map(function ($code) use ($line) {
-			if (str_contains($code, '<span style="color: #e0e2e4;">' . $line)) {
-				$code = "<div class='error-line'>$code</div>";
+		$red = CustomTheme::RED;
+		$code = array_map(function ($code) use ($line, $red) {
+			$pattern = '/<span (.*?)>' . $line . '/';
+			if (preg_match($pattern, $code)) {
+				$code = "<div style='display: inline-block; width: 100%; background-color: $red'>$code</div>";
 			}
 
 			return $code;
