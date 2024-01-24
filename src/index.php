@@ -251,8 +251,6 @@
                     <label class="badge">PHP <?= $phpVersion ?></label>
 	                <?php /** @var string $appVersion */ ?>
                     <label class="badge">APP <?= $appVersion ?></label>
-	                <?php /** @var string $packageVersion */ ?>
-                    <label class="badge">PACKAGE <?= $packageVersion ?></label>
                 </div>
             </div>
             <div class="major-details">

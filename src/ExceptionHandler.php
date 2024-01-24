@@ -14,8 +14,7 @@ class ExceptionHandler
 		protected bool $isEnabled,
 		protected bool $isConsole,
 		protected int $maxFrameLines = 15,
-		protected string $appVersion = '0.0.0',
-		protected string $version = '0.0.0'
+		protected string $appVersion = '0.0.0'
 	) { }
 
 	/**
@@ -148,7 +147,6 @@ class ExceptionHandler
 			'class'          => get_class($exception),
 			'phpVersion'     => phpversion(),
 			'appVersion'     => $this->appVersion,
-			'packageVersion' => $this->version
 		]);
 	}
 
