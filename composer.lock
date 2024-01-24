@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b62038a73fae31a4e836476ecf8292d3",
+    "content-hash": "7c96ae7944b1ade463da1cab6676fe34",
     "packages": [
         {
             "name": "demyanovs/php-highlight",
