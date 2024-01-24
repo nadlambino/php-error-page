@@ -48,13 +48,13 @@ class ExceptionHandler
 		$otherFrames = [];
 		foreach ($frames as $filename => $contents) {
 			if (!str_contains($filename, 'public/index') && !str_contains($filename, 'vendor')) {
-				$appFrames[] = $contents;
+				$appFrames[$filename] = $contents;
 			} else {
-				$otherFrames[] = $contents;
+				$otherFrames[$filename] = $contents;
 			}
 		}
 
-		return array_values([...$appFrames, ...$otherFrames]);
+		return [...$appFrames, ...$otherFrames];
 	}
 
 	/**
@@ -105,7 +105,7 @@ class ExceptionHandler
 			$lineNumberOnFirstLinePattern = '/<span (.*?)>' . $line . '/';
 			$lineNumberOnNewLinePattern = '/' . $line . '(.*?)&nbsp;/';
 			if (preg_match($lineNumberOnFirstLinePattern, $code) || preg_match($lineNumberOnNewLinePattern, $code)) {
-				$code = "<div style='display: inline-block; width: 100%; background-color: $red'>$code</div>";
+				$code = "<div style='display: inline-table; width: 100%; background-color: $red'>$code</div>";
 			}
 
 			return $code;
