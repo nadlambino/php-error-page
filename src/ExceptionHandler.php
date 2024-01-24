@@ -143,7 +143,7 @@ class ExceptionHandler
 			'file'           => $file,
 			'line'           => $line,
 			'frames'         => $frames,
-			'solutions'      => $exception instanceof ExceptionWithSuggestions ? $exception->getSuggestions() : [],
+			'suggestions'    => $exception instanceof ExceptionWithSuggestions ? $exception->getSuggestions() : [],
 			'class'          => get_class($exception),
 			'phpVersion'     => phpversion(),
 			'appVersion'     => $this->appVersion,

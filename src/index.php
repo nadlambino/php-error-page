@@ -14,6 +14,8 @@
             --muted: #666d76;
             --error: #fa1313;
             --error-opacity: #fa131330;
+            --success: #17b944;
+            --success-opacity: #00ff3c30;
         }
 
         body, div, h1, h2, h3, h4, h5, p, label, small {
@@ -130,14 +132,50 @@
             font-size: 12px;
         }
 
+        .suggestion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .suggestion-actions button {
+            background-color: var(--success-opacity);
+            color: var(--success);
+            border: none;
+            padding: 5px 8px;
+            cursor: pointer;
+            width: 100px;
+        }
+
+        .suggestion-actions button:disabled {
+            cursor: not-allowed;
+            background-color: var(--secondary-light);
+            color: var(--muted);
+        }
+
         .suggestion-list {
             color: var(--muted);
-            padding: 0 0 0 20px;
-            list-style-position: outside;
+            padding: 0;
+            list-style: none;
             display: flex;
-            flex-direction: column;
-            gap: 5px;
             font-size: 14px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scroll-snap-type: x mandatory;
+            transition: transform 1s ease;
+        }
+
+        .suggestion-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        .suggestion-list li {
+            width: 100%;
+            min-width: 100%;
+            display: block;
+            white-space: break-spaces;
+            scroll-snap-align: start;
+            transition: transform 1s ease;
         }
 
         .message {
@@ -264,12 +302,20 @@
 				     */ ?>
                     <label class="text-muted location"><?= $file ?> on line <?= $line ?></label>
                 </div>
-			    <?php if (!empty($solutions)): ?>
+			    <?php if (!empty($suggestions)): ?>
                     <div class="major-details-item suggestions-container">
-                        <label>Suggestions</label>
-                        <ul class="suggestion-list">
-						    <?php foreach ($solutions as $solution): ?>
-                                <li><?= $solution ?></li>
+                        <div class="suggestion-header">
+                            <label>Suggestions</label>
+                            <?php if (count($suggestions) > 1): ?>
+                                <div class="suggestion-actions">
+                                    <button onclick="slideList(-400)" id="prev">Previous</button>
+                                    <button onclick="slideList(400)" id="next">Next</button>
+                                </div>
+	                        <?php endif ?>
+                        </div>
+                        <ul class="suggestion-list" id="suggestions-slider">
+						    <?php foreach ($suggestions as $suggestion): ?>
+                                <li><?= $suggestion ?></li>
 						    <?php endforeach; ?>
                         </ul>
                     </div>
@@ -292,7 +338,7 @@
             </div>
             <?php foreach ($frames as $filename => $frame): ?>
 	            <?php
-	            $id = str_replace("\\", '-', $filename);
+	                $id = str_replace("\\", '-', $filename);
 	            ?>
                 <div class="frame-tab" data-id="<?= $id ?>">
                     <div class="frame-content">
@@ -304,6 +350,7 @@
     </div>
 <script>
     showFrame();
+    slideList(0);
 
     function showFrame() {
         const checkedRadioButton = document.querySelector('input[name="frame"]:checked');
@@ -324,6 +371,36 @@
 
             frame.classList.toggle('active-frame');
             label.classList.toggle('active-label');
+        }
+    }
+
+    function slideList(scrollAmount) {
+        const listContainer = document.getElementById('suggestions-slider');
+        listContainer.scrollLeft += scrollAmount;
+
+        updatePreviousState(listContainer);
+        updateNextState(listContainer);
+    }
+
+    function updatePreviousState(listContainer) {
+        const hasPrevious = listContainer.scrollLeft > 0;
+        const previousBtn = document.getElementById('prev');
+
+        if (!hasPrevious) {
+            previousBtn.setAttribute('disabled', 'disabled');
+        } else {
+            previousBtn.removeAttribute('disabled');
+        }
+    }
+
+    function updateNextState(listContainer) {
+        const hasNext = listContainer.scrollLeft < (listContainer.scrollWidth - listContainer.clientWidth);
+        const nextBtn = document.getElementById('next');
+
+        if (!hasNext) {
+            nextBtn.setAttribute('disabled', 'disabled');
+        } else {
+            nextBtn.removeAttribute('disabled');
         }
     }
 </script>
