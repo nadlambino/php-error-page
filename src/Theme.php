@@ -7,14 +7,24 @@ namespace Inspira\ErrorPage;
 use Demyanovs\PHPHighlight\Themes\Dto\DefaultColorSchemaDto;
 use Demyanovs\PHPHighlight\Themes\Dto\PHPColorSchemaDto;
 use Demyanovs\PHPHighlight\Themes\Dto\XMLColorSchemaDto;
-use Demyanovs\PHPHighlight\Themes\Theme;
+use Demyanovs\PHPHighlight\Themes\Theme as HighlighterTheme;
 
-class CustomTheme
+/**
+ * Class CustomTheme
+ *
+ * @package Inspira\ErrorPage
+ */
+class Theme
 {
-	public const TITLE = 'custom';
+	public const TITLE = 'theme';
 
 	public const RED = '#7D131350';
 
+	/**
+	 * Load the custom theme.
+	 *
+	 * @return array An array containing the custom theme.
+	 */
 	public static function load(): array
 	{
 		$defaultColorSchemaDto = new DefaultColorSchemaDto(
@@ -42,6 +52,6 @@ class CustomTheme
 			'#557182;',
 		);
 
-		return [new Theme(self::TITLE, $defaultColorSchemaDto, $PHPColorSchemaDto, $XMLColorSchemaDto)];
+		return [new HighlighterTheme(self::TITLE, $defaultColorSchemaDto, $PHPColorSchemaDto, $XMLColorSchemaDto)];
 	}
 }
