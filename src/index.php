@@ -10,7 +10,7 @@
             --primary-dark: #0f1829;
             --secondary-dark: #404243;
             --primary-light: #fff;
-            --secondary-light: #f3f3f3;
+            --secondary-light: #fafafa;
             --muted: #666d76;
             --error: #fa1313;
             --error-opacity: #fa131330;
@@ -28,9 +28,11 @@
             background-color: var(--secondary-light);
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            background-image: radial-gradient(#ccc 1px, transparent 0);
-            background-size: 30px 30px;
+            gap: 2rem;
+            background-size: 10px 10px;
+            background-image:
+                    linear-gradient(to right, #f3f3f3 1px, transparent 1px),
+                    linear-gradient(to bottom, #f3f3f3 1px, transparent 1px);
         }
 
         @media screen and (min-width: 768px) {
@@ -52,11 +54,12 @@
         }
 
         .badge {
-            background-color: var(--error);
-            color: var(--primary-light) !important;
+            background-color: var(--error-opacity);
+            color: var(--error);
             font-size: 11px;
             padding: 5px 10px;
             border-radius: 2px;
+            font-weight: bolder;
         }
 
         .shadow-md {
@@ -79,7 +82,21 @@
 
         .minor-details {
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        @media screen and (min-width: 768px) {
+            .minor-details {
+                flex-direction: row;
+            }
+        }
+
+        .versions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
         }
 
         .major-details {
@@ -161,6 +178,17 @@
             background: var(--primary-light);
         }
 
+        .frame-sidebar {
+            height: 100%;
+            width: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .frame-sidebar [type=radio] {
+            display: none;
+        }
+
         .frame-tab {
             display: flex;
         }
@@ -172,17 +200,15 @@
             cursor: pointer;
             color: var(--error);
             background: var(--primary-light);
-            overflow: hidden;
+            overflow-wrap: break-word;
+            display: block;
+            border-bottom: 1px solid var(--secondary-light);
         }
 
         @media screen and (min-width: 768px) {
             .frame-btn {
                 width: 280px;
             }
-        }
-
-        .frame-tab [type=radio] {
-            display: none;
         }
 
         .frame-content {
@@ -201,14 +227,16 @@
             }
         }
 
-        [type=radio]:checked ~ .frame-btn {
-            background: var(--error-opacity);
-            border-bottom: 2px solid var(--error);
+        .active-frame {
             z-index: 2;
+            position: absolute;
+            top: 0;
+            width: 100%;
         }
 
-        [type=radio]:checked ~ .frame-btn ~ .frame-content {
-            z-index: 1;
+        .active-label {
+            background: var(--error-opacity);
+            border-bottom: 2px solid var(--error);
         }
     </style>
 </head>
@@ -218,8 +246,14 @@
             <div class="minor-details">
 			    <?php /** @var string $class */ ?>
                 <label class="badge"><?= $class ?></label>
-			    <?php /** @var string $phpVersion */ ?>
-                <label class="badge">PHP <?= $phpVersion ?></label>
+                <div class="versions">
+	                <?php /** @var string $phpVersion */ ?>
+                    <label class="badge">PHP <?= $phpVersion ?></label>
+	                <?php /** @var string $appVersion */ ?>
+                    <label class="badge">APP <?= $appVersion ?></label>
+	                <?php /** @var string $packageVersion */ ?>
+                    <label class="badge">PACKAGE <?= $packageVersion ?></label>
+                </div>
             </div>
             <div class="major-details">
                 <div class="major-details-item">
@@ -249,16 +283,51 @@
     <?php /** @var array $frames */ ?>
     <div class="container">
         <div class="frame-tabs shadow-md">
+            <div class="frame-sidebar">
+	            <?php foreach ($frames as $filename => $frame): ?>
+                    <?php
+                        $id = str_replace("\\", '-', $filename);
+                    ?>
+                    <input type="radio" id="<?= $id ?>" onchange="showFrame()" name="frame" <?= $filename === $file ? 'checked' : '' ?>>
+                    <label role="button" class="frame-btn" for="<?= $id ?>"><?= $frame['location'] ?></label>
+	            <?php endforeach; ?>
+            </div>
             <?php foreach ($frames as $filename => $frame): ?>
-                <div class="frame-tab">
-                    <input type="radio" id="<?= $filename ?>" name="frame" <?= $filename === $file ? 'checked' : '' ?> >
-                    <label class="frame-btn" for="<?= $filename ?>"><?= $filename ?></label>
+	            <?php
+	            $id = str_replace("\\", '-', $filename);
+	            ?>
+                <div class="frame-tab" data-id="<?= $id ?>">
                     <div class="frame-content">
-                        <?= $frame ?>
+                        <?= $frame['frame'] ?>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
+<script>
+    showFrame();
+
+    function showFrame() {
+        const checkedRadioButton = document.querySelector('input[name="frame"]:checked');
+        const frames = document.querySelectorAll('.active-frame');
+        const labels = document.querySelectorAll(`.active-label`);
+
+        for (let frame of frames) {
+            frame.classList.remove('active-frame');
+        }
+
+        for (let label of labels) {
+            label.classList.remove('active-label');
+        }
+
+        if (checkedRadioButton) {
+            const frame = document.querySelector(`[data-id="${checkedRadioButton.id}"]`);
+            const label = document.querySelector(`label[for="${checkedRadioButton.id}"]`);
+
+            frame.classList.toggle('active-frame');
+            label.classList.toggle('active-label');
+        }
+    }
+</script>
 </body>
 </html>

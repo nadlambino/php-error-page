@@ -13,7 +13,9 @@ class ExceptionHandler
 	public function __construct(
 		protected bool $isEnabled,
 		protected bool $isConsole,
-		protected int $maxFrameLines = 5
+		protected int $maxFrameLines = 15,
+		protected string $appVersion = '0.0.0',
+		protected string $version = '0.0.0'
 	) { }
 
 	/**
@@ -41,7 +43,10 @@ class ExceptionHandler
 				continue;
 			}
 
-			$frames[$stack['file']] = $this->createCodeFrame($stack['file'], $stack['line']);
+			$frames[$file = $stack['file']] = [
+				'frame' => $this->createCodeFrame($file, $line = $stack['line']),
+				'location' => $file . ':' . $line
+			];
 		}
 
 		$appFrames = [];
@@ -76,7 +81,7 @@ class ExceptionHandler
 				$codeblock .= "$lineNumber   $code";
 			}
 
-			$frame = "<pre data-file='$file on line $line' data-lang='php'>";
+			$frame = "<pre data-file='$file:$line' data-lang='php'>";
 			$frame .= $codeblock;
 			$frame .= "</pre>";
 
@@ -134,14 +139,16 @@ class ExceptionHandler
 		]);
 
 		return self::render(__DIR__ . DIRECTORY_SEPARATOR . 'index.php', [
-			'message'       => $exception->getMessage(),
-			'code'          => $exception->getCode(),
-			'file'          => $file,
-			'line'          => $line,
-			'frames'        => $frames,
-			'solutions'     => $exception instanceof ExceptionWithSuggestions ? $exception->getSuggestions() : [],
-			'class'         => get_class($exception),
-			'phpVersion'    => phpversion()
+			'message'        => $exception->getMessage(),
+			'code'           => $exception->getCode(),
+			'file'           => $file,
+			'line'           => $line,
+			'frames'         => $frames,
+			'solutions'      => $exception instanceof ExceptionWithSuggestions ? $exception->getSuggestions() : [],
+			'class'          => get_class($exception),
+			'phpVersion'     => phpversion(),
+			'appVersion'     => $this->appVersion,
+			'packageVersion' => $this->version
 		]);
 	}
 
