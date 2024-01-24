@@ -58,7 +58,7 @@
             color: var(--primary-light) !important;
             font-size: 11px;
             padding: 5px 10px;
-            border-radius: 5px;
+            border-radius: 2px;
         }
 
         .shadow-md {
