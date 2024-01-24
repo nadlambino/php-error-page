@@ -2,6 +2,7 @@
     "name": "inspira/error-page",
     "description": "PHP error page component.",
     "type": "library",
+    "version": "dev-master",
     "require": {
         "inspira/contracts": "dev-master",
         "demyanovs/php-highlight": "dev-master"
