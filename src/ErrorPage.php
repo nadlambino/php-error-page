@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Inspira\ErrorPage;
 
-use SebastianBergmann\LinesOfCode\Exception;
+use Exception;
 
 /**
  * Class ErrorPage
@@ -29,7 +29,7 @@ class ErrorPage
 	)
 	{
 		try {
-			$composer = json_decode(file_get_contents('./../composer.json'), true);
+			$composer = json_decode(file_get_contents(dirname(__DIR__) . '/composer.json'), true);
 			$this->version ??= $composer['version'] ?? '0.0.0';
 		} catch (Exception) {
 		}
