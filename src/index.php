@@ -10,10 +10,8 @@
             --primary-dark: #0f1829;
             --secondary-dark: #404243;
             --primary-light: #fff;
-            --secondary-light: #e8e8e8;
-            --muted: #7a828d;
-            --accent: #06b539;
-            --accent-opacity: #06b53950;
+            --secondary-light: #f3f3f3;
+            --muted: #666d76;
             --error: #fa1313;
             --error-opacity: #fa131330;
         }
@@ -25,7 +23,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif;
             font-size: 16px;
             background-color: var(--secondary-light);
             display: flex;
@@ -116,13 +114,13 @@
         }
 
         .suggestion-list {
-            color: var(--accent);
+            color: var(--muted);
             padding: 0 0 0 20px;
             list-style-position: outside;
             display: flex;
             flex-direction: column;
             gap: 5px;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .message {
@@ -207,7 +205,6 @@
             background: var(--error-opacity);
             border-bottom: 2px solid var(--error);
             z-index: 2;
-            font-weight: bolder;
         }
 
         [type=radio]:checked ~ .frame-btn ~ .frame-content {
