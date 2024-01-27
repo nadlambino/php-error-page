@@ -69,7 +69,7 @@ class ExceptionHandler
 
 		$file = $exception->getFile();
 		$line = $exception->getLine();
-		$frames = $this->getSortedFrames([
+		[$app, $vendor] = $this->getSortedFrames([
 			['file' => $file, 'line' => $line],
 			...$exception->getTrace()
 		]);
@@ -79,7 +79,8 @@ class ExceptionHandler
 			'code' => $exception->getCode(),
 			'file' => $file,
 			'line' => $line,
-			'frames' => $frames,
+			'appFrames' => $app,
+			'vendorFrames' => $vendor,
 			'suggestions' => $exception instanceof ExceptionWithSuggestions ? $exception->getSuggestions() : [],
 			'class' => get_class($exception),
 			'phpVersion' => phpversion(),
@@ -110,16 +111,16 @@ class ExceptionHandler
 		}
 
 		$appFrames = [];
-		$otherFrames = [];
+		$vendorFrames = [];
 		foreach ($frames as $frame) {
-			if (!str_contains($filename = $frame['filename'], 'public/index') && !str_contains($filename, 'vendor')) {
+			if (!str_contains($filename = $frame['filename'], 'public/index') && !str_contains($filename, DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR)) {
 				$appFrames[] = $frame;
 			} else {
-				$otherFrames[] = $frame;
+				$vendorFrames[] = $frame;
 			}
 		}
 
-		return [...$appFrames, ...$otherFrames];
+		return [$appFrames, $vendorFrames];
 	}
 
 	/**

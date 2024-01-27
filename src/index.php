@@ -270,6 +270,15 @@
             }
         }
 
+        .frame-group-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: 5px 10px;
+            background-color: var(--secondary-light);
+            display: block;
+        }
+
         .frame-content {
             position: absolute;
             top: 0;
@@ -346,22 +355,40 @@
     </div>
 </header>
 
-<?php /** @var array $frames */ ?>
+<?php
+/**
+ * @var array $appFrames
+ * @var array $vendorFrames
+ */
+?>
 <div class="container">
     <div class="frame-tabs shadow-md">
         <div class="frame-sidebar">
-			<?php foreach ($frames as $index => $frame): ?>
-                <input type="radio" id="<?= $index ?>" onchange="showFrame()" name="frame" <?= $index === 0 ? 'checked' : '' ?>>
-                <label role="button" class="frame-btn" for="<?= $index ?>"><?= $frame['location'] ?></label>
+            <label class="frame-group-label">App Frames</label>
+			<?php foreach ($appFrames as $index => $frame): ?>
+                <input type="radio" id="app-<?= $index ?>" onchange="showFrame()" name="frame" <?= $index === 0 ? 'checked' : '' ?>>
+                <label role="button" class="frame-btn" for="app-<?= $index ?>"><?= $frame['location'] ?></label>
 			<?php endforeach; ?>
+            <label class="frame-group-label">Vendor Frames</label>
+	        <?php foreach ($vendorFrames as $index => $frame): ?>
+                <input type="radio" id="vendor-<?= $index ?>" onchange="showFrame()" name="frame">
+                <label role="button" class="frame-btn" for="vendor-<?= $index ?>"><?= $frame['location'] ?></label>
+	        <?php endforeach; ?>
         </div>
-		<?php foreach ($frames as $index => $frame): ?>
-            <div class="frame-tab" data-id="<?= $index ?>">
+		<?php foreach ($appFrames as $index => $frame): ?>
+            <div class="frame-tab" data-id="app-<?= $index ?>">
                 <div class="frame-content">
 					<?= $frame['frame'] ?>
                 </div>
             </div>
 		<?php endforeach; ?>
+	    <?php foreach ($vendorFrames as $index => $frame): ?>
+            <div class="frame-tab" data-id="vendor-<?= $index ?>">
+                <div class="frame-content">
+				    <?= $frame['frame'] ?>
+                </div>
+            </div>
+	    <?php endforeach; ?>
     </div>
 </div>
 <script>
