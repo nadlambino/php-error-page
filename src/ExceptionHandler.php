@@ -102,7 +102,8 @@ class ExceptionHandler
 				continue;
 			}
 
-			$frames[$file = $stack['file']] = [
+			$frames[] = [
+				'filename' => $file = $stack['file'],
 				'frame' => $this->createCodeFrame($file, $line = $stack['line']),
 				'location' => $file . ':' . $line
 			];
@@ -110,11 +111,11 @@ class ExceptionHandler
 
 		$appFrames = [];
 		$otherFrames = [];
-		foreach ($frames as $filename => $contents) {
-			if (!str_contains($filename, 'public/index') && !str_contains($filename, 'vendor')) {
-				$appFrames[$filename] = $contents;
+		foreach ($frames as $frame) {
+			if (!str_contains($filename = $frame['filename'], 'public/index') && !str_contains($filename, 'vendor')) {
+				$appFrames[] = $frame;
 			} else {
-				$otherFrames[$filename] = $contents;
+				$otherFrames[] = $frame;
 			}
 		}
 

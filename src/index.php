@@ -55,9 +55,18 @@
             }
         }
 
-        .badge {
+        .error-badge {
             background-color: var(--error-opacity);
             color: var(--error);
+            font-size: 11px;
+            padding: 5px 10px;
+            border-radius: 2px;
+            font-weight: bolder;
+        }
+
+        .success-badge {
+            background-color: var(--success-opacity);
+            color: var(--success);
             font-size: 11px;
             padding: 5px 10px;
             border-radius: 2px;
@@ -182,6 +191,7 @@
             color: var(--primary-dark);
             font-size: 32px;
             margin-bottom: 0.5rem;
+            overflow-wrap: break-word;
         }
 
         .location {
@@ -214,13 +224,24 @@
             position: relative;
             height: 410px;
             background: var(--primary-light);
+            margin-bottom: 40px;
         }
 
         .frame-sidebar {
             height: 100%;
-            width: 300px;
-            overflow-y: auto;
+            width: 320px;
+            overflow-y: scroll;
             overflow-x: hidden;
+        }
+
+        .frame-sidebar::-webkit-scrollbar {
+            width: 3px;
+            background-color: var(--primary-light);
+        }
+
+        .frame-sidebar::-webkit-scrollbar-thumb {
+            background-color: var(--muted);
+            border-radius: 20px;
         }
 
         .frame-sidebar [type=radio] {
@@ -234,9 +255,9 @@
         .frame-btn {
             padding: 10px;
             font-size: 12px;
-            width: 100px;
+            width: 120px;
             cursor: pointer;
-            color: var(--error);
+            color: var(--muted);
             background: var(--primary-light);
             overflow-wrap: break-word;
             display: block;
@@ -245,7 +266,7 @@
 
         @media screen and (min-width: 768px) {
             .frame-btn {
-                width: 280px;
+                width: 95%;
             }
         }
 
@@ -253,15 +274,15 @@
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 120px;
-            width: calc(100% - 120px);
+            left: 140px;
+            width: calc(100% - 140px);
             background-color: var(--primary-dark);
         }
 
         @media screen and (min-width: 768px) {
             .frame-content {
-                left: 300px;
-                width: calc(100% - 300px);
+                left: 320px;
+                width: calc(100% - 320px);
             }
         }
 
@@ -275,79 +296,74 @@
         .active-label {
             background: var(--error-opacity);
             border-bottom: 2px solid var(--error);
+            color: var(--error);
         }
     </style>
 </head>
 <body>
-    <header class="container">
-        <div class="header shadow-md">
-            <div class="minor-details">
-			    <?php /** @var string $class */ ?>
-                <label class="badge"><?= $class ?></label>
-                <div class="versions">
-	                <?php /** @var string $phpVersion */ ?>
-                    <label class="badge">PHP <?= $phpVersion ?></label>
-	                <?php /** @var string $appVersion */ ?>
-                    <label class="badge">APP <?= $appVersion ?></label>
-                </div>
-            </div>
-            <div class="major-details">
-                <div class="major-details-item">
-				    <?php /** @var string $message */ ?>
-                    <h1 class="message"><?= $message ?></h1>
-				    <?php
-				    /**
-				     * @var string $file
-				     * @var string $line
-				     */ ?>
-                    <label class="text-muted location"><?= $file ?> on line <?= $line ?></label>
-                </div>
-			    <?php if (!empty($suggestions)): ?>
-                    <div class="major-details-item suggestions-container">
-                        <div class="suggestion-header">
-                            <label>Suggestions</label>
-                            <?php if (count($suggestions) > 1): ?>
-                                <div class="suggestion-actions">
-                                    <button onclick="slideList(-400)" id="prev">Previous</button>
-                                    <button onclick="slideList(400)" id="next">Next</button>
-                                </div>
-	                        <?php endif ?>
-                        </div>
-                        <ul class="suggestion-list" id="suggestions-slider">
-						    <?php foreach ($suggestions as $suggestion): ?>
-                                <li><?= $suggestion ?></li>
-						    <?php endforeach; ?>
-                        </ul>
-                    </div>
-			    <?php endif ?>
+<header class="container">
+    <div class="header shadow-md">
+        <div class="minor-details">
+			<?php /** @var string $class */ ?>
+            <label class="error-badge"><?= $class ?></label>
+            <div class="versions">
+				<?php /** @var string $phpVersion */ ?>
+                <label class="success-badge">PHP <?= $phpVersion ?></label>
+				<?php /** @var string $appVersion */ ?>
+                <label class="success-badge">APP <?= $appVersion ?></label>
             </div>
         </div>
-    </header>
-
-    <?php /** @var array $frames */ ?>
-    <div class="container">
-        <div class="frame-tabs shadow-md">
-            <div class="frame-sidebar">
-	            <?php foreach ($frames as $filename => $frame): ?>
-                    <?php
-                        $id = str_replace("\\", '-', $filename);
-                    ?>
-                    <input type="radio" id="<?= $id ?>" onchange="showFrame()" name="frame" <?= $filename === $file ? 'checked' : '' ?>>
-                    <label role="button" class="frame-btn" for="<?= $id ?>"><?= $frame['location'] ?></label>
-	            <?php endforeach; ?>
+        <div class="major-details">
+            <div class="major-details-item">
+				<?php /** @var string $message */ ?>
+                <h1 class="message"><?= $message ?></h1>
+				<?php
+				/**
+				 * @var string $file
+				 * @var string $line
+				 */ ?>
+                <label class="text-muted location"><?= $file ?> on line <?= $line ?></label>
             </div>
-            <?php foreach ($frames as $filename => $frame): ?>
-	            <?php
-	                $id = str_replace("\\", '-', $filename);
-	            ?>
-                <div class="frame-tab" data-id="<?= $id ?>">
-                    <div class="frame-content">
-                        <?= $frame['frame'] ?>
+			<?php if (!empty($suggestions)): ?>
+                <div class="major-details-item suggestions-container">
+                    <div class="suggestion-header">
+                        <label>Suggestions</label>
+						<?php if (count($suggestions) > 1): ?>
+                            <div class="suggestion-actions">
+                                <button onclick="slideList(-400)" id="prev">Previous</button>
+                                <button onclick="slideList(400)" id="next">Next</button>
+                            </div>
+						<?php endif ?>
                     </div>
+                    <ul class="suggestion-list" id="suggestions-slider">
+						<?php foreach ($suggestions as $suggestion): ?>
+                            <li><?= $suggestion ?></li>
+						<?php endforeach; ?>
+                    </ul>
                 </div>
-            <?php endforeach; ?>
+			<?php endif ?>
         </div>
     </div>
+</header>
+
+<?php /** @var array $frames */ ?>
+<div class="container">
+    <div class="frame-tabs shadow-md">
+        <div class="frame-sidebar">
+			<?php foreach ($frames as $index => $frame): ?>
+                <input type="radio" id="<?= $index ?>" onchange="showFrame()" name="frame" <?= $index === 0 ? 'checked' : '' ?>>
+                <label role="button" class="frame-btn" for="<?= $index ?>"><?= $frame['location'] ?></label>
+			<?php endforeach; ?>
+        </div>
+		<?php foreach ($frames as $index => $frame): ?>
+            <div class="frame-tab" data-id="<?= $index ?>">
+                <div class="frame-content">
+					<?= $frame['frame'] ?>
+                </div>
+            </div>
+		<?php endforeach; ?>
+    </div>
+</div>
 <script>
     showFrame();
     slideList(0);
