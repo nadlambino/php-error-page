@@ -3,7 +3,7 @@
     "description": "PHP error page component.",
     "type": "library",
     "require": {
-        "php": "8.3",
+        "php": "^8.3",
         "inspira/contracts": "dev-master",
         "demyanovs/php-highlight": "dev-master"
     },
