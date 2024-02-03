@@ -217,7 +217,7 @@
         }
 
         .code-block {
-            margin-top: -15px !important;
+            margin-top: -30px !important;
         }
 
         .frame-tabs {
