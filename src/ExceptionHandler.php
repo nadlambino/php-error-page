@@ -41,7 +41,10 @@ class ExceptionHandler
 	 */
 	public function __invoke(Throwable $exception): void
 	{
-		ob_clean();
+		if (ob_get_level() > 0) {
+			ob_clean();
+		}
+
 		http_response_code(500);
 		$stream = fopen('php://output', 'w');
 		fwrite($stream, $this->getErrorMessage($exception));
