@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b62038a73fae31a4e836476ecf8292d3",
+    "content-hash": "cca74fcb73a8c2cee93734c539794fac",
     "packages": [
         {
             "name": "demyanovs/php-highlight",
@@ -65,13 +65,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nadlambino/php-contracts.git",
-                "reference": "811ba8aac71b173e12c1c1b7fcde4370f0fd11fa"
+                "reference": "f02c44fee1804c4a255cff56fb9eb4288bafa3d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nadlambino/php-contracts/zipball/811ba8aac71b173e12c1c1b7fcde4370f0fd11fa",
-                "reference": "811ba8aac71b173e12c1c1b7fcde4370f0fd11fa",
+                "url": "https://api.github.com/repos/nadlambino/php-contracts/zipball/f02c44fee1804c4a255cff56fb9eb4288bafa3d7",
+                "reference": "f02c44fee1804c4a255cff56fb9eb4288bafa3d7",
                 "shasum": ""
+            },
+            "require": {
+                "php": "^8.3"
             },
             "default-branch": true,
             "type": "library",
@@ -95,7 +98,7 @@
                 "issues": "https://github.com/nadlambino/php-contracts/issues",
                 "source": "https://github.com/nadlambino/php-contracts/tree/master"
             },
-            "time": "2023-12-28T06:58:48+00:00"
+            "time": "2024-02-02T10:50:34+00:00"
         }
     ],
     "packages-dev": [
@@ -105,25 +108,32 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nadlambino/php-utils.git",
-                "reference": "64efb154a9f20fa9b07b1fa8a186e1433d1e9b6e"
+                "reference": "fc5f215a485e0731213ce5bc93677cde2df5e851"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nadlambino/php-utils/zipball/64efb154a9f20fa9b07b1fa8a186e1433d1e9b6e",
-                "reference": "64efb154a9f20fa9b07b1fa8a186e1433d1e9b6e",
+                "url": "https://api.github.com/repos/nadlambino/php-utils/zipball/fc5f215a485e0731213ce5bc93677cde2df5e851",
+                "reference": "fc5f215a485e0731213ce5bc93677cde2df5e851",
                 "shasum": ""
             },
             "require": {
-                "inspira/contracts": "dev-master"
+                "inspira/contracts": "dev-master",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "pestphp/pest": "3.x-dev",
+                "symfony/var-dumper": "7.1.x-dev"
             },
             "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [
-                    "functions.php"
+                    "src/array.php",
+                    "src/string.php",
+                    "src/functions.php"
                 ],
                 "psr-4": {
-                    "Inspira\\Utils\\": "."
+                    "Inspira\\Utils\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -141,7 +151,7 @@
                 "issues": "https://github.com/nadlambino/php-utils/issues",
                 "source": "https://github.com/nadlambino/php-utils/tree/master"
             },
-            "time": "2023-12-28T09:00:30+00:00"
+            "time": "2024-02-23T07:43:06+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -149,12 +159,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "42292d99c55abe617799667f454222c54c60e229"
+                "reference": "9773676c8a1bb1f8d4340a62efe641cf76eda7ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/42292d99c55abe617799667f454222c54c60e229",
-                "reference": "42292d99c55abe617799667f454222c54c60e229",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/9773676c8a1bb1f8d4340a62efe641cf76eda7ec",
+                "reference": "9773676c8a1bb1f8d4340a62efe641cf76eda7ec",
                 "shasum": ""
             },
             "require": {
@@ -169,9 +179,6 @@
             "default-branch": true,
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "1.28-dev"
-                },
                 "thanks": {
                     "name": "symfony/polyfill",
                     "url": "https://github.com/symfony/polyfill"
@@ -209,7 +216,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.28.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.29.0"
             },
             "funding": [
                 {
@@ -225,7 +232,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-28T09:04:16+00:00"
+            "time": "2024-01-29T20:11:03+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -233,12 +240,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "a882c92e8e926d28e22923072297e6ba91a4c7b2"
+                "reference": "c431188a7f50515d5c65c590c7bea0675d3b46a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/a882c92e8e926d28e22923072297e6ba91a4c7b2",
-                "reference": "a882c92e8e926d28e22923072297e6ba91a4c7b2",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/c431188a7f50515d5c65c590c7bea0675d3b46a1",
+                "reference": "c431188a7f50515d5c65c590c7bea0675d3b46a1",
                 "shasum": ""
             },
             "require": {
@@ -254,7 +261,7 @@
                 "symfony/http-kernel": "^6.4|^7.0",
                 "symfony/process": "^6.4|^7.0",
                 "symfony/uid": "^6.4|^7.0",
-                "twig/twig": "^3.0.4|^4.0"
+                "twig/twig": "^3.0.4"
             },
             "bin": [
                 "Resources/bin/var-dump-server"
@@ -308,7 +315,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-17T15:30:39+00:00"
+            "time": "2024-02-15T11:36:43+00:00"
         }
     ],
     "aliases": [],
@@ -321,7 +328,9 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.3"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }
